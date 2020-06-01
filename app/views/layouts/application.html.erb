@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ScottjodoinFacebook</title>
+    <title>Scacebook</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    
+      <div style="position:fixed;width:100%;left:0px;top:0px;">
+        <p class="notice" style="background-color:lightgreen;"><%= notice %></p>
+        <p class="alert" style="background-color:pink;margin:0px;"><%= alert %></p>
+      </div>
   </head>
 
-  <body>
+  <body style="margin:0px;">
+    <div style="height:70px;width:100%;background-color:lightblue;">
+      <span style="float:left;border:0px;">
+        <h1>Scacebook</h1>
+      </span>
+      <span style="float:right;margin:10px">
+        <ul class="hmenu">
+          <%= render 'devise/menu/registration_items' %>
+          <%= render 'devise/menu/login_items' %>
+        </ul>
+      </span>
+    </div>
+
     <%= yield %>
   </body>
 </html>
