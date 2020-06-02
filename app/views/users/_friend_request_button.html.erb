@@ -1,0 +1,16 @@
+<% unless @display_user.id === current_user.id or
+  current_user.friends_with? @display_user
+%>
+  <%= button_to("Send Friend Request", {
+    action: "create",
+    controller: :friendships,
+    params:
+    {
+      friendship:
+      {
+        friend: @display_user,
+      }
+    }
+    }, remote: true, 
+   ) %>
+<% end %>

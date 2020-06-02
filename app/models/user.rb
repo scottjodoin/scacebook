@@ -4,7 +4,25 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
+  has_many :friendships
+  has_many :friends, class_name: "User", through: :friendships
 
+  def friendship_state(friend)
+    # expects friend: a user
+    return :none unless friends.exists?(friend.id)
+    f_state = Friendship.where(user_id: id, friend_id: friend.id).first.state
+    f_i_state = Friendship.where(user_id: friend.id, friend_id: id).first.state
+
+    if f_state == "accepted" and f_i_state == "accepted"
+      return :accepted
+    elsif f_state == "accepted" and f_i_state == "invited"
+      return :sent
+    elsif f_state == "invited" and f_i_state == "accepted"
+      return :pending_acceptance
+    end
+
+    return :none
+  end
 
   def self.new_with_session(params, session)
     super.tap do |user|
