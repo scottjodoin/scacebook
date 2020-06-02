@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_02_031029) do
+ActiveRecord::Schema.define(version: 2020_06_02_031504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,45 @@ ActiveRecord::Schema.define(version: 2020_06_02_031029) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "albums", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.bigint "sender_id"
+    t.bigint "receiver_id"
+    t.integer "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["receiver_id"], name: "index_friendships_on_receiver_id"
+    t.index ["sender_id"], name: "index_friendships_on_sender_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.bigint "users_id"
+    t.string "likeable_type"
+    t.bigint "likeable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
+    t.index ["users_id"], name: "index_likes_on_users_id"
+  end
+
+  create_table "pictures", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -52,4 +91,7 @@ ActiveRecord::Schema.define(version: 2020_06_02_031029) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "friendships", "users", column: "receiver_id"
+  add_foreign_key "friendships", "users", column: "sender_id"
+  add_foreign_key "likes", "users", column: "users_id"
 end
