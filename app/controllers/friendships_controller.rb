@@ -3,32 +3,50 @@ class FriendshipsController < ApplicationController
     #TODO
     # Maybe refresh only the partial?
     # Use and modify the 'state' variable
-  def create
+  def send_request
     #TODO:
     #create friendship with appropriate users
     #make friendships index in which 'pending requests' appear
     #make an 'unfriend' button in which a friendship is destroyed
-    return if current_user.id == create_friendship_params[:friend_id] or
-      Users.exists?(create_friendship_params[:friend_id])
-    new_friend = User.find(create_friendship_params[:friend_id])
-    p new_friend
-    Friendship.create(user: current_user.id, friend: new_friend.id, state: :accepted)
-    Friendship.create(user: new_friend.id, friend: current_user.id, state: :invited)
+    friend_id = friendship_params[:friend_id]
+    raise "Unfriend error" unless current_user.id != friend_id and
+    User.exists?(friend_id)
 
-    
+    new_friend = User.find(friendship_params[:friend_id])
+    f = Friendship.new(user: current_user, friend: new_friend, state: :accepted)
+    f_i = Friendship.new(user: new_friend, friend: current_user, state: :invited)
+    Friendship.transaction do
+      f.save!
+      f_i.save!
+    end
+
+    redirect_back(fallback_location: root_path)
   end
 
-  def update
+  def accept_request
+    friend_id = friendship_params[:friend_id]
+    raise "Unfriend error" unless current_user.id != friend_id and
+    User.exists?(friend_id)
 
+    Friendship.where(user_id: current_user, friend_id: friend_id ).first.update(state: "accepted")
+
+    redirect_back(fallback_location: root_path)
   end
 
-  def destroy
+  def unfriend
+    friend_id = friendship_params[:friend_id]
+    raise "Unfriend error" unless current_user.id != friend_id and
+    User.exists?(friend_id)
 
+    Friendship.where(user_id: current_user, friend_id: friend_id).or(
+      Friendship.where(user_id: friend_id, friend_id: current_user)).destroy_all
+
+    redirect_back(fallback_location: root_path)
   end
 
   private
 
-  def create_friendship_params
-    require(:friendship).permit(:friend_id)
+  def friendship_params
+    params.require(:friendship).permit(:friend_id)
   end
 end

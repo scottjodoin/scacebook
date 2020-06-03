@@ -1,16 +1,22 @@
-<% unless @display_user.id === current_user.id or
-  current_user.friends_with? @display_user
+<% unless @display_user.id === current_user.id
 %>
-  <%= button_to("Send Friend Request", {
-    action: "create",
-    controller: :friendships,
-    params:
-    {
-      friendship:
-      {
-        friend: @display_user,
-      }
-    }
-    }, remote: true, 
-   ) %>
+  <% friendship_state = current_user.friendship_state(@display_user).to_s 
+  %>
+  <%# Note that using a hash to DRY these methods throws button_to way off.
+      Unfruitful caution required.   %>
+  <% if friendship_state ==  "sent" %>
+    <%= button_to "Friend Request Sent", "", disabled: true %>
+    <%= button_to "Cancel", unfriend_friendships_path, method: :post,
+    params: {friendship:{friend_id: @display_user.id}}, remote: true %>
+  <% elsif friendship_state == "accepted" %>
+    <%= button_to "Unfriend", unfriend_friendships_path, method: :post,
+    params: {friendship:{friend_id: @display_user.id}}, remote: true %>
+  <% elsif friendship_state == "none" %>
+    <%= button_to "Send Friend Request", send_request_friendships_path, 
+    params: {friendship:{friend_id: @display_user.id}}, method: :post, remote: true %>
+  <% elsif friendship_state == "pending_acceptance" %>
+    <%= button_to "Accept Friend Request", accept_request_friendships_path,
+    params: {friendship:{friend_id: @display_user.id}}, method: :post, remote: true %>
+     
+  <% end %>
 <% end %>

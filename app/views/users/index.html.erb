@@ -3,7 +3,7 @@
 <ul id="articles">
   <% @users.each do |user| %>
     <li>
-      <%= link_to user.name, user_path(user) %> |
+      <%= link_to user.name, user_path(user) %>
       <%=
       @display_user = user 
       render "friend_request_button" %>
