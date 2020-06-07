@@ -2,6 +2,6 @@
 <%= render "profile_picture"%>
 <h2>
   <%= @display_user.name %>
+  <%= render "friend_request_button" %>
 </h2>
-
-<%= render "friend_request_button" %>
+<p><%= link_to "Pictures", user_pictures_path(@display_user) %> </p>

@@ -1,0 +1,15 @@
+<%= form_for(@picture) do |f| %>
+  <div class="field">
+    <%= f.label :image, "Upload Image" %><br />
+    <%= f.file_field :image %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description, autofocus: true, autocomplete: "description" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Upload" %>
+  </div>
+<% end %>

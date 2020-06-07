@@ -12,6 +12,9 @@ class User < ApplicationRecord
   has_many :friendships
   has_many :friends, class_name: "User", through: :friendships, dependent: :destroy
 
+  #pictures
+  has_many :pictures
+
   #profile
   has_one_attached :image
 
