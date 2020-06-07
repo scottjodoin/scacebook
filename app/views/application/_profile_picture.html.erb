@@ -1,0 +1,5 @@
+<% if @display_user.image.attached? %>
+  <%= image_tag @display_user.image.variant(resize: '64x64!'), class: "rounded-class" %><br/>
+<% else %>
+  <%= image_tag gravatar_image_url(@display_user.email, size: 64), height: 64, width: 64, class: "rounded-circle" %>
+<% end %>

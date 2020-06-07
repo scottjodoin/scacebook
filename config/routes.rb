@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' } do
+  devise_for :users, controllers: { :registrations => 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks' } do
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
-  resources :users, only: [:show, :index]
+  resources :users, only: [:show, :index, :destroy]
   resources :friendships, only: [:index] do
     post :send_request, on: :collection
     post :accept_request, on: :collection

@@ -1,11 +1,19 @@
 class User < ApplicationRecord
+
+  before_destroy :destroy_friendships
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
+
+  #friends       
   has_many :friendships
-  has_many :friends, class_name: "User", through: :friendships
+  has_many :friends, class_name: "User", through: :friendships, dependent: :destroy
+
+  #profile
+  has_one_attached :image
 
   def friendship_state(friend)
     # expects friend: a user
@@ -41,6 +49,14 @@ class User < ApplicationRecord
       # If you are using confirmable and the provider(s) you use validate emails, 
       # uncomment the line below to skip the confirmation emails.
       # user.skip_confirmation!
+    end
+  end
+
+
+  private
+  def destroy_friendships
+    friendships.each do |friendship|
+      friendship.destroy
     end
   end
 end

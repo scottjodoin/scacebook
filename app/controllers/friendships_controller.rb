@@ -1,13 +1,7 @@
 class FriendshipsController < ApplicationController
 
-    #TODO
-    # Maybe refresh only the partial?
-    # Use and modify the 'state' variable
   def send_request
-    #TODO:
-    #create friendship with appropriate users
-    #make friendships index in which 'pending requests' appear
-    #make an 'unfriend' button in which a friendship is destroyed
+
     friend_id = friendship_params[:friend_id]
     raise "Unfriend error" unless current_user.id != friend_id and
     User.exists?(friend_id)
