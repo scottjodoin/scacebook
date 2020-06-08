@@ -45,7 +45,6 @@ class PicturesController < ApplicationController
   end
 
 
-  #TODO - Repace this with /users/:userid/pictures/:picture_id
   def index
     set_user
     @pictures = @user.pictures

@@ -6,5 +6,5 @@ class Picture < ApplicationRecord
   #has_many :users, through: :likes
   #belongs_to :album
   belongs_to :user
-
+  has_many :posts, as: :postable
 end
