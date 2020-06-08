@@ -1,8 +1,14 @@
 <h1>Picture by <%= @picture.user.name %></h1>
-<p><%= image_tag @picture.image %></p>
 <p><%= @picture.created_at %>
 <p><%= @picture.description %></p>
+<p>
 <% if current_user == @picture.user %>
   <%= link_to("Edit description", edit_picture_path(@picture)) %> |
   <%= link_to("Delete", picture_path(@picture), method: :delete) %>
 <% end %>
+</p>
+<p>
+  <%= link_to("Back to #{@picture.user.name}'s pictures", user_pictures_path(@picture.user)) %>
+</p>
+
+<p><%= image_tag @picture.image %></p>
