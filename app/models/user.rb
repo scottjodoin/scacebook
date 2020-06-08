@@ -8,17 +8,18 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
 
-  #friends       
+  # friends       
   has_many :friendships
   has_many :friends, class_name: "User", through: :friendships, dependent: :destroy
 
-  #pictures
+  # assets
   has_many :pictures
+  has_many :statuses
 
-  #posts
+  # posts
   has_many :posts
 
-  #profile
+  # profile
   has_one_attached :image
 
   def friendship_state(friend)

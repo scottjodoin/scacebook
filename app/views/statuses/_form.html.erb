@@ -1,0 +1,10 @@
+<%= form_for(@status) do |f| %>
+
+  <div class="field">
+    <%= f.text_field :body, autofocus: true, autocomplete: "status" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Post" %>
+  </div>
+<% end %>

@@ -6,8 +6,12 @@ Rails.application.routes.draw do
   # Consider using the "shallow" option for :pictures
   resources :users, only: [:show, :index, :destroy] do
     resources :pictures
+    resources :statuses
   end
+
   resources :pictures
+  resources :statuses
+  
   resources :friendships, only: [:index] do
     post :send_request, on: :collection
     post :accept_request, on: :collection

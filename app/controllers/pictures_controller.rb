@@ -13,7 +13,7 @@ class PicturesController < ApplicationController
     @picture = current_user.pictures.build(create_picture_params)
     respond_to do |format|
       if @picture.save
-        format.html { redirect_to pictures_url, notice: 'Picture successfully created. ' }
+        format.html { redirect_to pictures_path, notice: 'Picture successfully created. ' }
       else
         format.html { render :new }
       end
@@ -43,7 +43,6 @@ class PicturesController < ApplicationController
       format.html { redirect_to pictures_url, notice: 'Picture was successfully deleted.' }
     end
   end
-
 
   def index
     set_user

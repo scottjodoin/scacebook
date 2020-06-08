@@ -1,5 +1,7 @@
 <h1><%= @user.name %>'s Pictures</h1>
-<p><%= link_to "New Picture", new_picture_path%><p>
+<% if current_user == @user %>
+  <p><%= link_to "New Picture", new_picture_path%><p>
+<% end %>
 <% @pictures.each do |picture| %>
   <div style="float:left;">
     <%= link_to image_tag(picture.image.variant(resize: '300x300!')), picture_path(picture) %>

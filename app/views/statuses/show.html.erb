@@ -1,0 +1,10 @@
+<p>
+  <%= @display_user = @status.user
+    render "profile_picture"
+  %>
+  <%= @status.body %>
+</p>
+
+<p>
+ <%= link_to "Show all statuses", statuses_path %>
+</p>

@@ -1,0 +1,20 @@
+<h1><%= @user.name %>'s Statuses</h1>
+<% if current_user == @user %>
+  <p><%= link_to "New Status", new_status_path %></p>
+<% end %>
+
+<ul>
+<% @statuses.each do |status| %>
+  <li>
+    <%= link_to status.body, status_path(status) %> |
+    <%= status.created_at %>
+    <% if current_user == @user %>
+      <br/>
+      <%= link_to "Delete", status_path(status), method: :delete %> |
+      <%= link_to "Edit", edit_status_path(status) %>
+    <% end %>
+  </li>
+<% end %>
+</ul>
+
+<%= link_to "Back to user", user_path(@user) %>
