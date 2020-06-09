@@ -13,6 +13,7 @@ class PicturesController < ApplicationController
     @picture = current_user.pictures.build(create_picture_params)
     respond_to do |format|
       if @picture.save
+        current_user.posts.create(postable: @picture)
         format.html { redirect_to pictures_path, notice: 'Picture successfully created. ' }
       else
         format.html { render :new }
@@ -28,7 +29,7 @@ class PicturesController < ApplicationController
     set_picture
     respond_to do |format|
       if @picture.update(update_picture_params)
-        format.html { redirect_to @picture, notice: 'Description successfully updated.' }
+        format.html { redirect_to user_path(current_user), notice: 'Description successfully updated.' }
       else
         format.html { render :edit }
       end

@@ -13,7 +13,8 @@ class StatusesController < ApplicationController
     @status = current_user.statuses.build(status_params)
     respond_to do |format|
       if @status.save
-        format.html { redirect_to statuses_url, notice: 'Status successfully created. ' }
+        current_user.posts.create(postable: @status)
+        format.html { redirect_to user_path(current_user), notice: 'Status successfully created. ' }
       else
         format.html { render :new }
       end

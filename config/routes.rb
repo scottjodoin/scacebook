@@ -3,12 +3,13 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { :registrations => 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks' } do
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
-  # Consider using the "shallow" option for :pictures
+  # TODO: Consider using the "shallow" option for :pictures / :statuses
   resources :users, only: [:show, :index, :destroy] do
     resources :pictures
     resources :statuses
+    resources :posts, only: [:show, :edit, :new, :destroy, :index]
   end
-
+  resources :posts, only: [:show, :edit, :new, :destroy, :index]
   resources :pictures
   resources :statuses
   

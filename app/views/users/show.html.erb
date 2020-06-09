@@ -6,3 +6,15 @@
 </h2>
 <p><%= link_to "Pictures", user_pictures_path(@display_user) %> </p>
 <p><%= link_to "Statuses", user_statuses_path(@display_user) %>
+
+<% if @display_user == current_user %>
+  <%= render "posts/form" %>
+<% end %>
+
+<% @posts.each do |post| %>
+
+  <%=
+  @post = post
+  render "posts/post"
+  %>
+<% end %>

@@ -1,0 +1,11 @@
+
+<% if @post.postable.class.name == "Status" %>
+  <%= @post.postable.body %>
+<% elsif @post.postable.class.name == "Picture" %>
+  <%= image_tag @post.postable.image.variant(resize: '300x300!') %>
+<% end %>
+
+<%= button_tag "Like" %>
+<% if @post.user == current_user %>
+  <%= button_to "Delete", post_path(@post), method: :delete %>
+<% end %>

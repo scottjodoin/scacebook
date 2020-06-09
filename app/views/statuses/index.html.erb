@@ -1,4 +1,4 @@
-<h1><%= @user.name %>'s Statuses</h1>
+<h1><%= link_to @user.name, user_path(@user) %>'s Statuses</h1>
 <% if current_user == @user %>
   <p><%= link_to "New Status", new_status_path %></p>
 <% end %>
