@@ -1,5 +1,6 @@
 class FriendshipsController < ApplicationController
-
+  before_action :authenticate_user!
+  
   def send_request
 
     friend_id = friendship_params[:friend_id]

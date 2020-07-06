@@ -5,7 +5,10 @@
   <%= image_tag @post.postable.image.variant(resize: '300x300!') %>
 <% end %>
 
-<%= button_tag "Like" %>
+<%=
+  @likeable = @post
+  render "like_button"
+%>
 <% if @post.user == current_user %>
   <%= button_to "Delete", post_path(@post), method: :delete %>
 <% end %>

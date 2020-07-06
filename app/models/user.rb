@@ -18,6 +18,9 @@ class User < ApplicationRecord
 
   # posts
   has_many :posts
+  
+  # likes
+  has_many :likes
 
   # profile
   has_one_attached :image

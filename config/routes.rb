@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :pictures
   resources :statuses
   
+  resources :likes, only: [:create, :destroy]
+
   resources :friendships, only: [:index] do
     post :send_request, on: :collection
     post :accept_request, on: :collection

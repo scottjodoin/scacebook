@@ -14,7 +14,6 @@ class PostsController < ApplicationController
 
   def edit
     helper_function = "edit_#{@postable.class.name.downcase}_path" 
-    puts helper_function
     redirect_to send(helper_function, @postable)
   end
 

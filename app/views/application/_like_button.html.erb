@@ -1,0 +1,9 @@
+<% if liked_by_me? @likeable %>
+  <%= 
+  @my_like = my_like(@likeable)
+  button_to "Unlike", like_path(@my_like), method: :delete,
+  params: {like:{id: @my_like.id}, remote: true} %>
+<% elsif %>
+  <%= button_to "Like", likes_path, method: :post,
+  params: {like:{likeable_id:@likeable.id, likeable_type:@likeable.class.name}, remote: true} %>
+<% end %>
